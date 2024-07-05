@@ -1,8 +1,11 @@
-import jax
 import time
+
+import jax
 import jax.numpy as jnp
 import pytest
+
 from mlmc import NormalShiftMC
+
 
 @pytest.mark.parametrize("shift", [-0.5, -0.1, 0.0, 0.1, 0.5])
 def test_normal_shift(shift):
@@ -14,7 +17,7 @@ def test_normal_shift(shift):
     rng = jax.random.key(int(time.time()))
 
     shift = shift + jnp.zeros((dimension,))
-    model = NormalShiftMC(shift=shift, k = 0.)
+    model = NormalShiftMC(shift=shift, k=0.0)
 
     initial_conditions = jnp.zeros((num_traj, dimension))
     trajectory = [initial_conditions]
@@ -22,7 +25,7 @@ def test_normal_shift(shift):
         rng, rng_use = jax.random.split(rng)
         positions, p_acc = model(trajectory[-1], rng_use, step_size)
         trajectory.append(positions)
-        print(i/N_steps, jnp.mean(positions, axis=0), jnp.var(positions, axis=0), p_acc)
+        print(i / N_steps, jnp.mean(positions, axis=0), jnp.var(positions, axis=0), p_acc)
 
     trajectory = jnp.asarray(trajectory)
 
