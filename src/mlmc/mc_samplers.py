@@ -4,7 +4,6 @@ import jax
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
 import numpy as np
-from gyana.plot_util import savefig
 
 
 def plot_trajectory(trajectory):
@@ -19,7 +18,7 @@ def plot_trajectory(trajectory):
     for i in range(data.shape[1]):
         ax.plot(data[:, i, 0], data[:, i, 1])
 
-    savefig(fig, "", "traj.pdf")
+    fig.savefig("traj.pdf", transparent=True, bbox_inches="tight", pad_inches=0)
     plt.close(fig)
 
 
